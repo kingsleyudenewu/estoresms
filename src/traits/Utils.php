@@ -47,7 +47,7 @@ trait Utils
 
     private function getErrorResponses()
     {
-        $filtered = Arr::except(config('estoresms.response'), config('estoresms.response.OK') );
+        $filtered = Arr::except(config('estoresms.response'), config('estoresms.response.OK'));
         [$keys, $values] = Arr::divide($filtered);
         return $keys;
     }
