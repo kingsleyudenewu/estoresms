@@ -4,6 +4,7 @@
 namespace Kingsleyudenewu\Estoresms\traits;
 
 
+use Illuminate\Support\Arr;
 use Ixudra\Curl\Facades\Curl;
 
 trait Utils
@@ -42,5 +43,17 @@ trait Utils
 
         $response['message'] = $message;
         return response()->json($response);
+    }
+
+    private function getErrorResponses()
+    {
+        $filtered = Arr::except(config('estoresms.response'), config('estoresms.response.OK') );
+        [$keys, $values] = Arr::divide($filtered);
+        return $keys;
+    }
+
+    private function getConfigResponseMessage($key)
+    {
+        return config('estoresms.response')[$key];
     }
 }
