@@ -32,7 +32,7 @@ class Estoresms
 
     public function sendSms($data = [])
     {
-        if (empty($data))
+        if (empty($data) || !is_array($data))
         {
             return $this->setResponse(false, null, 'Invalid payload');
         }
@@ -51,25 +51,52 @@ class Estoresms
             return $this->setResponse(false, null, $this->getConfigResponseMessage(config('estoresms.sms_response'), '-2913'));
         }
 
-        if ($data['dnd'])
+        if ($data['sms_type'] == 'flash')
         {
-            $send_sms = $this->getRequest(config('estoresms.url').
-                'smsapi.php?username='. config('estoresms.username').
-                '&password='.config('estoresms.username').
-                '&recipient='.$data['recipient'].
-                '&message='.$data['message'].
-                '&dnd='.$data['dnd']
-            );
+            if ($data['dnd'])
+            {
+                $send_sms = $this->getRequest(config('estoresms.url').
+                    'flashsms_api.php?username='. config('estoresms.username').
+                    '&password='.config('estoresms.username').
+                    '&recipient='.$data['recipient'].
+                    '&message='.$data['message'].
+                    '&dnd='.$data['dnd']
+                );
+            }
+            else
+            {
+                $send_sms = $this->getRequest(config('estoresms.url').
+                    'flashsms_api.php?username='. config('estoresms.username').
+                    '&password='.config('estoresms.username').
+                    '&recipient='.$data['recipient'].
+                    '&message='.$data['message'].'&'
+                );
+            }
         }
-        else
+        elseif ($data['sms_type'] == 'sms')
         {
-            $send_sms = $this->getRequest(config('estoresms.url').
-                'smsapi.php?username='. config('estoresms.username').
-                '&password='.config('estoresms.username').
-                '&recipient='.$data['recipient'].
-                '&message='.$data['message'].'&'
-            );
+            if ($data['dnd'])
+            {
+                $send_sms = $this->getRequest(config('estoresms.url').
+                    'smsapi.php?username='. config('estoresms.username').
+                    '&password='.config('estoresms.username').
+                    '&recipient='.$data['recipient'].
+                    '&message='.$data['message'].
+                    '&dnd='.$data['dnd']
+                );
+            }
+            else
+            {
+                $send_sms = $this->getRequest(config('estoresms.url').
+                    'smsapi.php?username='. config('estoresms.username').
+                    '&password='.config('estoresms.username').
+                    '&recipient='.$data['recipient'].
+                    '&message='.$data['message'].'&'
+                );
+            }
         }
+
+
 
         // Check if we got an error response from the SMS API
         $this->displayErrorMessage(config('estoresms.sms_response'), $send_sms);
