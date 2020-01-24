@@ -4,7 +4,7 @@
  * You can place your custom package configuration in here.
  */
 return [
-    'response' => [
+    'sms_response' => [
         'OK' => 'Successful',
         '-2904' => 'SMS sending failed',
         '-2905' => 'Invalid username/password combination',
@@ -21,6 +21,20 @@ return [
         '-2916' => 'Blocked message content',
         '-2917' => 'Blocked sender ID',
     ],
+    'bill_payment_response' => [
+        'OK' => 'Successful',
+        'FAIL' => 'Not Successful',
+        'B001' => 'Authentication Failed',
+        'B002' => 'Operation not allowed on account',
+        'B003' => 'API not enabled for this account',
+        'B004' => 'Invalid request',
+        'B005' => 'Product has no plan in this category',
+        'B006' => 'Validation failed',
+        'B007' => 'Insufficient Balance',
+        'B008' => 'Invalid Amount',
+        'B009' => 'Operation Failed',
+    ],
+
     'token' => env('ESTORE_TOKEN'),
     'email' => env('ESTORE_EMAIL'),
     'username' => env('ESTORE_USERNAME'),

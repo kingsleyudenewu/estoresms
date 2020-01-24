@@ -2,11 +2,12 @@
 
 namespace Kingsleyudenewu\Estoresms;
 
+use Kingsleyudenewu\Estoresms\traits\SmsResponse;
 use Kingsleyudenewu\Estoresms\traits\Utils;
 
 class Estoresms
 {
-    use Utils;
+    use Utils, SmsResponse;
 
     public function accountBalance()
     {

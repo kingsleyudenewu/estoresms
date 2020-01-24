@@ -45,15 +45,18 @@ trait Utils
         return response()->json($response);
     }
 
-    private function getErrorResponses()
+    private function getErrorResponses($response_type, $response_filter_value)
     {
-        $filtered = Arr::except(config('estoresms.response'), config('estoresms.response.OK'));
+        //$filtered = Arr::except(config('estoresms.sms_response'), config('estoresms
+        //.sms_response.OK'));
+        $filtered = Arr::except($response_type, $response_filter_value);
         [$keys, $values] = Arr::divide($filtered);
         return $keys;
     }
 
-    private function getConfigResponseMessage($key)
+    private function getConfigResponseMessage($response_type, $key)
     {
-        return config('estoresms.response')[$key];
+//        return config('estoresms.sms_response')[$key];
+        return $response_type[$key];
     }
 }
