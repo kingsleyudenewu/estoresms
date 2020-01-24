@@ -47,8 +47,6 @@ trait Utils
 
     private function getErrorResponses($response_type, $response_filter_value)
     {
-        //$filtered = Arr::except(config('estoresms.sms_response'), config('estoresms
-        //.sms_response.OK'));
         $filtered = Arr::except($response_type, $response_filter_value);
         [$keys, $values] = Arr::divide($filtered);
         return $keys;
@@ -56,7 +54,18 @@ trait Utils
 
     private function getConfigResponseMessage($response_type, $key)
     {
-//        return config('estoresms.sms_response')[$key];
         return $response_type[$key];
+    }
+
+    private function displayErrorMessage($response_type, $error_code)
+    {
+        if (in_array($error_code, $this->getErrorResponses($response_type, $response_type['OK'])))
+        {
+            return $this->setResponse(false,
+                null,
+                $this->getConfigResponseMessage($response_type, $error_code)
+//                $this->getConfigResponseMessage(config('estoresms.sms_response'), $balance)
+            );
+        }
     }
 }
