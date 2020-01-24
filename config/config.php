@@ -21,6 +21,13 @@ return [
         '-2916' => 'Blocked message content',
         '-2917' => 'Blocked sender ID',
     ],
+    'bill_payment_category' => [
+        'tv',
+        'internet',
+        'electricity',
+        'waec',
+    ],
+
     'bill_payment_response' => [
         'OK' => 'Successful',
         'FAIL' => 'Not Successful',

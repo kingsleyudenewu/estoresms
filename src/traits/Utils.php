@@ -67,5 +67,19 @@ trait Utils
                 $this->getConfigResponseMessage($response_type, $error_code)
             );
         }
+
+        return null;
+    }
+
+    private function bill_payment_api_validation($category, $product)
+    {
+        $hash = hash('sha512', config('estoresms.token').config('estoresms.email').config('estoresms.username') );
+        $payload = [
+            'username' => config('estoresms.username'),
+            'hash' => $hash,
+            'category' => $category,
+            'product' => $product,
+        ];
+        $product_list = $this->postRequest(config('url').'bill_payment_processing/v/1/', $payload, []);
     }
 }

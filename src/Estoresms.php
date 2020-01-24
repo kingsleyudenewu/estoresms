@@ -96,10 +96,35 @@ class Estoresms
             }
         }
 
-
-
         // Check if we got an error response from the SMS API
-        $this->displayErrorMessage(config('estoresms.sms_response'), $send_sms);
+        $error_response = $this->displayErrorMessage(config('estoresms.sms_response'), $send_sms);
+        if (!is_null($error_response)){
+            return $error_response;
+        }
+
+        // Return success message and the number of SMS unit used
+        return $this->setResponse(true, $send_sms, 'success');
+    }
+
+    public function getBillPaymentList($category)
+    {
+        $hash = hash('sha512', config('estoresms.token').config('estoresms.email').config('estoresms.username') );
+
+        // Fetch product list
+        $payload = [
+          'username' => config('estoresms.username'),
+          'hash' => $hash,
+          'category' => $category,
+        ];
+        $product_list = $this->postRequest(config('url').'bill_payment_processing/v/1/', $payload, []);
+        if (optional($product_list)->response == 'OK')
+        {
+            return $product_list;
+        }
+    }
+
+    public function getProductPlans()
+    {
 
     }
 }
