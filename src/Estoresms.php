@@ -72,6 +72,7 @@ class Estoresms
         }
 
         // Check if we got an error response from the SMS API
+        $this->displayErrorMessage(config('estoresms.sms_response'), $send_sms);
 
     }
 }

@@ -61,10 +61,10 @@ trait Utils
     {
         if (in_array($error_code, $this->getErrorResponses($response_type, $response_type['OK'])))
         {
-            return $this->setResponse(false,
+            return $this->setResponse(
+                false,
                 null,
                 $this->getConfigResponseMessage($response_type, $error_code)
-//                $this->getConfigResponseMessage(config('estoresms.sms_response'), $balance)
             );
         }
     }
